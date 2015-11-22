@@ -11,6 +11,7 @@ class CardSetsController < ApplicationController
   # GET /card_sets/1
   # GET /card_sets/1.json
   def show
+    @tags = ActsAsTaggableOn::Tag.all.map{ |tag| tag.name }
   end
 
   # GET /card_sets/new
@@ -70,7 +71,6 @@ class CardSetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def card_set_params
-      params[:card_set]
       params.require(:card_set).permit(:title, :user_id, :label_front, :label_back)
     end
 end

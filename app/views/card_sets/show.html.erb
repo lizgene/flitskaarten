@@ -1,26 +1,55 @@
 <p id="notice"><%= notice %></p>
 
 <h2>Cards in "<%= @card_set.title %>"</h2>
+
+<%= form_for @card_set, html: { class: "ui form" } do |f| %>
 <table class="ui celled table">
   <thead>
     <tr>
       <th><%= @card_set.label_front %></th>
       <th><%= @card_set.label_back %></th>
+      <th>Tags</th>
       <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    <% @card_set.cards.each do |card| %>
-      <tr>
-        <td><%= card.front %></td>
-        <td><%= card.back %></td>
-        <td><%= link_to 'Edit', edit_card_set_card_path(@card_set.id, card.id) %></td>
-        <td><%= link_to 'Destroy', card_set_card_path(@card_set.id, card.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+
+      <%= f.fields_for :cards do |card_fields| %>
+        <tr>
+          <td>
+            <div class="field">
+              <%= card_fields.object.front %>
+              <%= card_fields.text_field :front, class: "hidden" %>
+            </div>
+          </td>
+          <td>
+            <div class="field">
+              <%= card_fields.object.back %>
+              <%= card_fields.text_field :back, class: "hidden" %>
+            </div>
+          </td>
+          <td>
+            <div class="field">
+              <%= card_fields.object.tag_list %>
+              <%= card_fields.select :tag_list, options_for_select(@tags.map{ |tag| [tag, tag]}), class: "ui fluid search dropdown hidden" %>
+            </div>
+          </td>
+          <td>
+            <%= link_to 'Edit', '#', class: "inline-edit" %>
+            <%= f.submit 'Save', class: "hidden ui primary button" %>
+          </td>
+          <td>
+            <%= link_to 'Destroy', card_set_card_path(@card_set.id, card_fields.object.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+
+      <% end %>
+
   </tbody>
 </table>
+
+<% end %>
 
 <%= link_to 'New Card', new_card_set_card_path(@card_set) %> |
 <%= link_to 'Edit', edit_card_set_path(@card_set) %> |
