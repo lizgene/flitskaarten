@@ -1,0 +1,26 @@
+<%= form_for [@card_set, @card] do |f| %>
+  <% if @card.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@card.errors.count, "error") %> prohibited this card from being saved:</h2>
+
+      <ul>
+      <% @card.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <%= f.hidden_field :card_set_id %>
+
+  <%= f.label :front, "#{@card_set.label_front}" %>
+  <%= f.text_field :front %>
+
+  <%= f.label :back, "#{@card_set.label_back}" %>
+  <%= f.text_field :back %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Card Sets</h1>
+
+<table class="ui celled table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Label Front</th>
+      <th>Label Back</th>
+      <th># Cards</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @card_sets.each do |card_set| %>
+      <tr>
+        <td><%= card_set.title %></td>
+        <td><%= card_set.label_front %></td>
+        <td><%= card_set.label_back %></td>
+        <td><%= card_set.cards.count %></td>
+        <td><%= link_to 'Show', card_set %></td>
+        <td><%= link_to 'Edit', edit_card_set_path(card_set) %></td>
+        <td><%= link_to 'Destroy', card_set, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Card set', new_card_set_path %>
